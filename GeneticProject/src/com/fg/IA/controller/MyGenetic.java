@@ -4,8 +4,6 @@ import com.fg.IA.model.Genetic;
 
 public class MyGenetic extends Genetic{	
 	
-	
-	
 	 MyGenetic(int num_g, int num_c, float crossover_fraction,
              float mutation_fraction) {
        super(num_g, num_c, crossover_fraction, mutation_fraction);

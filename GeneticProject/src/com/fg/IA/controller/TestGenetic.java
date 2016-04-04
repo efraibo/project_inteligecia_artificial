@@ -14,6 +14,7 @@ import com.fg.IA.model.Chromosome;
  * 2. Apache 2
  * <p/>
  */
+//classe teste
 public class TestGenetic {	
 	
    public static MyGenetic genetic_experiment;
