@@ -1,15 +1,24 @@
 package com.fg.IA.controller;
 
+import org.jfree.data.general.DefaultPieDataset;
+
 import com.fg.IA.model.Genetic;
 
 public class MyGenetic extends Genetic{	
+	float mutation_fraction;
+	float crossover_fraction;
+	DefaultPieDataset dataset = new DefaultPieDataset();
 	
-	 MyGenetic(int num_g, int num_c, float crossover_fraction,
+	MyGenetic(int num_g, int num_c, float crossover_fraction,
              float mutation_fraction) {
        super(num_g, num_c, crossover_fraction, mutation_fraction);
+       
+       this.mutation_fraction = mutation_fraction;
+       this.crossover_fraction = crossover_fraction;
+       
    }
    private float fitness(float x) {
-       return (float)(Math.sin(x) * Math.sin(0.4f * x) * Math.sin(3.0f * x));
+       return (float)((x * x + 2 * (x*x)) - (Math.cos(3 * Math.PI * x)) - (mutation_fraction * Math.cos(4 * Math.PI * x)) + crossover_fraction);
    }
    float geneToFloat(int chromosomeIndex) {
        int base = 1;
@@ -46,5 +55,7 @@ public class MyGenetic extends Genetic{
        System.out.println("Average fitness=" + sum +
        		           " and best fitness for this generation:" +
        		           getChromosomes().get(0).getFitness());
+       dataset.setValue("Aptidão média = " + String.valueOf(sum) + " e melhor adequação(fitness) para esta geração", 
+    		   getChromosomes().get(0).getFitness());
    }
 }

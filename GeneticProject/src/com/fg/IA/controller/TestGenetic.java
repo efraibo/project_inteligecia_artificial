@@ -1,5 +1,19 @@
 package com.fg.IA.controller;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.ui.ApplicationFrame;
+import org.jfree.ui.RefineryUtilities;
+
 import com.fg.IA.model.Chromosome;
 
 /**
@@ -15,17 +29,26 @@ import com.fg.IA.model.Chromosome;
  * <p/>
  */
 //classe teste
-public class TestGenetic {	
-	
+public class TestGenetic extends ApplicationFrame {		
    public static MyGenetic genetic_experiment;
-
    Chromosome chromosome = new Chromosome();
    
+   
+   public TestGenetic (String title, DefaultPieDataset dataset) {
+       super(title);
+       JPanel panel = new JPanel(new GridLayout(2, 2));
+       JFreeChart chart1 = ChartFactory.createPieChart("Chart 1", dataset, false, false, false);
+       panel.add(new ChartPanel(chart1));
+       panel.setPreferredSize(new Dimension(800, 600));
+       setContentPane(panel);
+
+   }
+   
     public static void main(String args[]) {    	
-    
         // we will use chromosomes with 10 1 bit genes per
         // chromosomes, and a population of 12 chromosomes:
-        genetic_experiment = new MyGenetic(10, 20, 0.85f, 0.3f);
+    	
+        genetic_experiment = new MyGenetic(10, 5, 0.4f, 0.7f);
         int geneIndex = 0; //  debug only
         for (Chromosome ll  : genetic_experiment.getChromosomes()) {
           System.out.println(ll.getChromosome() + " : " + genetic_experiment.geneToFloat(geneIndex++));
@@ -37,9 +60,14 @@ public class TestGenetic {
                 System.out.println("Generation " + i);
                 genetic_experiment.calcFitness(); // suggested by Rick Hall
                 genetic_experiment.sort();        // suggested by Rick Hall
-                genetic_experiment.print();
+                genetic_experiment.print();                
             }
         }
+        
+        TestGenetic demo = new TestGenetic("Gráfico dos melhores individuos por população", genetic_experiment.dataset);
+        demo.pack();
+        RefineryUtilities.centerFrameOnScreen(demo);
+        demo.setVisible(true);
     }
 }
 
